@@ -52,9 +52,9 @@ take_picture(){
 
   filedate="$(date +\%Y\%m\%d)"
   outputdir="/var/watchtower/cameras/${CAMERA}" && mkdir -p "${outputdir}"
-  outputdir="$outputdir/images" && mkdir -p "${outputdir}"
-  outputdir="$outputdir/$(date +\%Y)" && mkdir -p "${outputdir}"
-  outputdir="$outputdir/$(date +\%m\%d)" && mkdir -p "${outputdir}"
+  outputdir="${outputdir}/images" && mkdir -p "${outputdir}"
+  outputdir="${outputdir}/$(date +\%Y)" && mkdir -p "${outputdir}"
+  outputdir="${outputdir}/$(date +\%m\%d)" && mkdir -p "${outputdir}"
   output="${outputdir}/$(date +\%H\%M\%S).jpg"
   debug "Output file: ${output}"
 

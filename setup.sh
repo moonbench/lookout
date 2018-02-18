@@ -33,9 +33,17 @@ setup_directories(){
   mkdir /var/log/watchtower
   mkdir /var/watchtower
   mkdir /var/watchtower/cameras
-  mkdir /var/watchtower/config
+  mkdir /var/watchtower/scripts
+  say_done
+
+  debug "Updating groups..."
+  chgrp -R watchtower /var/log/watchtower
+  chgrp -R watchtower /var/watchtower
+  chmod -R g+rwx /var/watchtower
+  chmod -R g+rw /var/log/watchtower
+  say_done
+
   copy_scripts
-  say_done "Directories ready."
 }
 copy_scripts(){
   debug "Copying in scripts..."
@@ -46,8 +54,18 @@ copy_scripts(){
 setup_users(){
   debug "Setting up users..."
   remove_pi_user
+
+  debug "Creating watchtower users..."
   useradd -m camera
   useradd -m reader
+  say_done
+
+  debug "Adding watchtower group..."
+  groupadd -r watchtower
+  usermod -aG watchtower reader
+  usermod -aG watchtower camera
+  say_done
+
   say_done "Users ready."
 }
 remove_pi_user(){
@@ -76,7 +94,7 @@ enable_ssh(){
 
   debug "Adding group for ssh users..."
   groupadd -r sshusers
-  usermod -a -G sshusers reader
+  usermod -aG sshusers reader
   echo "AllowGroups sshusers" >> /etc/ssh/sshd_config
   /etc/init.d/ssh restart
   say_done
@@ -100,8 +118,8 @@ install_libav(){
 
 
 title "New tower setup"
-setup_directories
 setup_users
+setup_directories
 setup_network
 install_software
 success "Tower ready!"
