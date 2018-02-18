@@ -36,18 +36,18 @@ setup_directories(){
   mkdir /var/watchtower/scripts
   say_done
 
+  copy_scripts
+
   debug "Updating groups..."
   chgrp -R watchtower /var/log/watchtower
   chgrp -R watchtower /var/watchtower
   chmod -R g+rwx /var/watchtower
   chmod -R g+rw /var/log/watchtower
   say_done
-
-  copy_scripts
 }
 copy_scripts(){
   debug "Copying in scripts..."
-  cp -r ${ROOT_DIR}/scripts /var/watchtower/scripts
+  cp -r ${ROOT_DIR}/scripts/. /var/watchtower/scripts/
   say_done "Scripts copied."
 }
 
