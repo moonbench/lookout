@@ -31,5 +31,11 @@ update_aptget(){
 }
 
 update_aptget
+
+debug "Installing git..."
 apt-get install -y git
+say_done
+
+debug "Installing libav-tools..."
 apt-get install -y libav-tools
+say_done
