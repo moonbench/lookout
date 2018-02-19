@@ -3,6 +3,8 @@
 # Defaults
 LENGTH=20
 QUALITY=15
+CAMERA=0
+RESOLUTION="1280x720"
 
 # Colors
 HIGHLIGHT_COLOR='\e[36m'
@@ -52,7 +54,12 @@ log(){
 
 # Camera stuff
 record_video(){
-  title "Running video script for camera \"${CAMERA}\""
+  camera_source="/dev/video${CAMERA}"
+
+  debug "Camera: ${camera_source}"
+  debug "Length: ${LENGTH}"
+  debug "Quality: ${QUALITY}"
+  debug "Resolution: ${RESOLUTION}"
 
   filedate="$(date +\%Y\%m\%d)"
   outputdir="/var/watchtower/cameras/${CAMERA}" && mkdir -p "${outputdir}"
@@ -62,18 +69,28 @@ record_video(){
   output="${outputdir}/$(date +\%H:\%M:\%S).flv"
   debug "Output file: ${output}"
 
-  debug "Recording video..."
-  avconv -f video4linux2 -s 1280x720 -i /dev/video${CAMERA} -t ${LENGTH} -q ${QUALITY} ${output} >> /var/log/watchtower/camera_${CAMERA}.${filedate}.log 2>&1
+  debug "Capturing video..."
+  avconv -f video4linux2 -s ${RESOLUTION} -i ${camera_source} -t ${LENGTH} -q ${QUALITY} ${output} >> /var/log/watchtower/camera_${CAMERA}.${filedate}.log 2>&1
   say_done
-
-  success "Video script finished."
 }
 
-# Run the script
-if [[ -z "${1}" ]]; then
+while getopts ':c:l:q:r:' opt; do
+  case "${opt}" in
+    c) CAMERA="$OPTARG" ;;
+    l) LENGTH="$OPTARG" ;;
+    q) QUALITY="$OPTARG" ;;
+    r) RESOLUTION="$OPTARG" ;;
+    *) echo "Unknown option: -${OPTARG}" >&2
+       exit 1 ;;
+  esac
+done
+
+echo "${CAMERA}"
+if [[ -z "${CAMERA}" ]]; then
   error "No camera specified"
   exit 1
 fi
 
-declare CAMERA="${1}"
+title "Recording video..."
 record_video
+success "Recorded"
