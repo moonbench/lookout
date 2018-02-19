@@ -48,7 +48,27 @@ log(){
 
 # Camera stuff
 take_picture(){
-  title "Running photo script for camera \"${CAMERA}\""
+  camera_source="/dev/video${CAMERA}"
+  debug "Camera: ${camera_source}"
+
+  resolution=""
+  if [[ ! -z "${RESOLUTION}" ]]; then
+    debug "Resolution: ${RESOLUTION}"
+    resolution="-s ${RESOLUTION}"
+  fi
+
+  quality=""
+  if [[ ! -z "${QUALITY}" ]]; then
+    debug "Quality: ${QUALITY}"
+    quality="-q ${QUALITY}"
+  fi
+
+  delay=""
+  if [[ ! -z "${DELAY}" ]]; then
+    debug "Delay: ${DELAY}"
+    delay="-ss ${DELAY}"
+  fi
+
 
   filedate="$(date +\%Y\%m\%d)"
   outputdir="/var/watchtower/cameras/${CAMERA}" && mkdir -p "${outputdir}"
@@ -58,18 +78,29 @@ take_picture(){
   output="${outputdir}/$(date +\%H:\%M:\%S).jpg"
   debug "Output file: ${output}"
 
-  debug "Taking picture..."
-  avconv -f video4linux2 -i /dev/video${CAMERA} -vframes 1 -ss 1 ${output} >> /var/log/watchtower/camera_${CAMERA}.${filedate}.log 2>&1
+  debug "Capturing image..."
+  avconv -f video4linux2 -i ${camera_source} ${resolution} ${quality} ${delay} -vframes 1 ${output} >> /var/log/watchtower/camera_${CAMERA}.${filedate}.log 2>&1
   say_done
-
-  success "Photo script finished."
 }
 
 # Run the script
-if [[ -z "${1}" ]]; then
+while getopts ':c:q:r:d:' opt; do
+  case "${opt}" in
+    c) CAMERA="$OPTARG" ;;
+    q) QUALITY="$OPTARG" ;;
+    r) RESOLUTION="$OPTARG" ;;
+    d) DELAY="$OPTARG" ;;
+    *) echo "Unknown option: -${OPTARG}" >&2
+       exit ;;
+  esac
+done
+
+
+if [[ -z "${CAMERA}" ]]; then
   error "No camera specified"
   exit 1
 fi
 
-declare CAMERA="${1}"
+title "Taking photo..."
 take_picture
+success "Picture taken."
