@@ -102,6 +102,7 @@ enable_ssh(){
 
 install_software(){
   update_aptget
+  install_git
   install_libav
 }
 update_aptget(){
@@ -111,6 +112,9 @@ update_aptget(){
   apt-get autoremove
   apt-get autoclean
   debug "Updated."
+}
+install_git(){
+  apt-get install -y git
 }
 install_libav(){
   apt-get install -y libav-tools
