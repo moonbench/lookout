@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOSTNAME="watchtower1"
+HOSTNAME="wtower$(date +\%Y\%m\%d\%H\%M\%S)"
 
 declare ROOT_DIR="$(dirname $(readlink -f $0))"
 
@@ -26,7 +26,16 @@ say_done(){
   echo -e "=> ${DONE_COLOR}$donemsg${NO_COLOR}\\n"
 }
 
-title "Fresh watchtower setup tool"
+
+while getopts ":h:" opt; do
+  case "${opt}" in
+    h) HOSTNAME="$OPTARG" ;;
+    *) echo "Unknown option: -${OPTARG}">&2
+       exit 1 ;;
+  esac
+done
+
+title "Watchtower setup tool"
 
 debug "Setting up users..."
 ${ROOT_DIR}/setup/users.sh
