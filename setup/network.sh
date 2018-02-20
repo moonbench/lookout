@@ -37,8 +37,9 @@ restrict_ssh(){
   groupadd -r sshusers
   say_done
 
-  debug "Adding reader to ssh group..."
+  debug "Adding reader and camera to ssh group..."
   usermod -aG sshusers reader
+  usermod -aG sshusers camera
   say_done
 
   debug "Restricting ssh to group only..."
