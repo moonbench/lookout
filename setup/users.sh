@@ -19,7 +19,7 @@ say_done(){
 add_watchtower_users(){
   debug "Creating watchtower users..."
   useradd -m camera
-  useradd -m reader
+  useradd -m reader -s /bin/bash
   say_done
 }
 add_watchtower_group(){

@@ -17,8 +17,10 @@ say_done(){
 
 create_tower_ssh_key(){
   debug "Creating an ssh key for the camera user..."
-  su camera <<'EOF'
-ssh-keygen -f id_rsa -t rsa -N ''
+  su -l camera <<'EOF'
+cd ~
+mkdir .ssh
+ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -N ''
 EOF
   say_done
 }

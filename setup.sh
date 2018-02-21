@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOSTNAME="wtower$(date +\%Y\%m\%d\%H\%M\%S)"
+HOSTNAME="wt$(date +\%s)"
 
 declare ROOT_DIR="$(dirname $(readlink -f $0))"
 
@@ -50,7 +50,7 @@ ${ROOT_DIR}/setup/network.sh ${HOSTNAME}
 say_done
 
 debug "Setting up software..."
-${ROOT_DIR}/setup/software.sh
+#${ROOT_DIR}/setup/software.sh
 say_done
 
 debug "Setting up SSH keys..."

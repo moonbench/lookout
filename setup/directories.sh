@@ -57,5 +57,5 @@ copy_configs(){
 add_log_dir
 add_project_dir
 copy_scripts ${1} /var/watchtower/scripts/
-copy_configs ${2} /var/watchtowr/config/
+copy_configs ${2} /var/watchtower/config/
 update_file_permissions
