@@ -27,8 +27,8 @@ say_done(){
 
 copy_keys_to_server(){
   debug "Copying public keys to the server..."
-  su camera <<EOF
-ssh-copy-id camera@${HOST}
+  su -l camera <<EOF
+ssh-copy-id towers@${HOST}
 EOF
   say_done
 }
