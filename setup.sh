@@ -53,6 +53,18 @@ debug "Setting up software..."
 ${ROOT_DIR}/setup/software.sh
 say_done
 
+debug "Setting up SSH keys..."
+${ROOT_DIR}/setup/ssh.sh
+say_done
+
+debug "Starting cron jobs for camera user..."
+su camera <<'EOF'
+/var/watchtower/scripts/set_crontab.sh
+EOF
+say_done
+
 success "Watchtower setup finished."
-debug "Now use passwd to update the authentication for reader and camera."
-debug "Next use su to become camera and run /var/watchtower/scripts/set_crontab.sh"
+echo ""
+debug "Suggested next steps:"
+debug "\\t- Use 'passwd' to update the password for the 'reader' and 'camera' users"
+debug "\\t- Run setup/remote.js to configure authentication with the remote server"
