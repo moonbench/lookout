@@ -42,7 +42,7 @@ ${ROOT_DIR}/setup/users.sh
 say_done
 
 debug "Setting up directories..."
-${ROOT_DIR}/setup/directories.sh ${ROOT_DIR}/scripts/.
+${ROOT_DIR}/setup/directories.sh ${ROOT_DIR}/scripts/. ${ROOT_DIR}/config/.
 say_done
 
 debug "Setting up networking..."

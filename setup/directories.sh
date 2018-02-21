@@ -25,6 +25,7 @@ add_project_dir(){
   debug "Setting up project directories..."
   mkdir /var/watchtower
   mkdir /var/watchtower/cameras
+  mkdir /var/watchtower/config
   mkdir /var/watchtower/scripts
   say_done
 }
@@ -36,6 +37,7 @@ update_file_permissions(){
   chmod -R g+rw /var/log/watchtower
   say_done
 }
+
 copy_scripts(){
   debug "Copying in scripts..."
   debug "Source: ${1}"
@@ -44,7 +46,16 @@ copy_scripts(){
   say_done "Scripts copied."
 }
 
+copy_configs(){
+  debug "Copying in config files..."
+  debug "Source: ${1}"
+  debug "Destination: ${2}"
+  cp -r ${1} ${2}
+  say_done "Config copied."
+}
+
 add_log_dir
 add_project_dir
 copy_scripts ${1} /var/watchtower/scripts/
+copy_configs ${2} /var/watchtowr/config/
 update_file_permissions
