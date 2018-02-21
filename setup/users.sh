@@ -18,14 +18,13 @@ say_done(){
 
 add_watchtower_users(){
   debug "Creating watchtower users..."
-  useradd -m camera
-  useradd -m reader -s /bin/bash
+  useradd -m camera -s /bin/bash
+  usermod -aG video camera
   say_done
 }
 add_watchtower_group(){
   debug "Adding watchtower group..."
   groupadd -r watchtower
-  usermod -aG watchtower reader
   usermod -aG watchtower camera
   say_done
 }

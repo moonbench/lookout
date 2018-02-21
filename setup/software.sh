@@ -32,6 +32,6 @@ update_aptget(){
 
 update_aptget
 
-debug "Installing git, libav-tools, and autossh..."
-apt-get install -y git libav-tools autossh
+debug "Installing git, libav-tools, rsync, and autossh..."
+apt-get install -y git libav-tools rsync autossh
 say_done

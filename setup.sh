@@ -54,7 +54,7 @@ ${ROOT_DIR}/setup/network.sh ${HOSTNAME}
 say_done
 
 debug "Setting up software..."
-#${ROOT_DIR}/setup/software.sh
+${ROOT_DIR}/setup/software.sh
 say_done
 
 debug "Setting up SSH keys..."
@@ -70,5 +70,5 @@ say_done
 success "Watchtower setup finished."
 echo ""
 debug "Suggested next steps:"
-debug "\\t- Use 'passwd' to update the password for the 'reader' and 'camera' users"
-debug "\\t- Run setup/remote.js to configure authentication with the remote server"
+debug "\\t- Run: $ passwd camera"
+debug "\\t- Run: $ setup/remote.js"
