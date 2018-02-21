@@ -1,7 +1,5 @@
 #!/bin/bash
 
-HOSTNAME="watchtower1"
-
 HIGHLIGHT_COLOR='\e[36m'
 DONE_COLOR='\e[1;32m'
 NO_COLOR='\e[0m'

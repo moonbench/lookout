@@ -1,6 +1,0 @@
-{
-  "timelapse": {
-    "enabled": true,
-    "cron_schedule": "*/15 * * * *"
-  }
-}

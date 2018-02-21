@@ -29,9 +29,12 @@ copy_keys_to_server(){
   debug "Copying public keys to the server..."
   su -l camera <<EOF
 ssh-copy-id towers@${HOST}
+/var/watchtower/scripts/connect.sh -h ${HOST}
 EOF
   say_done
 }
+
+source /var/watchtower/config/remote
 
 while getopts ":h:" opt; do
   case "${opt}" in

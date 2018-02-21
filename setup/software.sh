@@ -32,10 +32,6 @@ update_aptget(){
 
 update_aptget
 
-debug "Installing git..."
-apt-get install -y git
-say_done
-
-debug "Installing libav-tools..."
-apt-get install -y libav-tools
+debug "Installing git, libav-tools, and autossh..."
+apt-get install -y git libav-tools autossh
 say_done

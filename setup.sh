@@ -1,5 +1,6 @@
 #!/bin/bash
 
+HOST="localhost"
 HOSTNAME="wt$(date +\%s)"
 
 declare ROOT_DIR="$(dirname $(readlink -f $0))"
@@ -26,10 +27,10 @@ say_done(){
   echo -e "=> ${DONE_COLOR}$donemsg${NO_COLOR}\\n"
 }
 
-
-while getopts ":h:" opt; do
+while getopts ":H:h:" opt; do
   case "${opt}" in
-    h) HOSTNAME="$OPTARG" ;;
+    H) HOSTNAME="$OPTARG" ;;
+    h) HOST="$OPTARG" ;;
     *) echo "Unknown option: -${OPTARG}">&2
        exit 1 ;;
   esac
@@ -46,7 +47,10 @@ ${ROOT_DIR}/setup/directories.sh ${ROOT_DIR}/scripts/. ${ROOT_DIR}/config/.
 say_done
 
 debug "Setting up networking..."
+
+source ${ROOT_DIR}/config/remote
 ${ROOT_DIR}/setup/network.sh ${HOSTNAME}
+
 say_done
 
 debug "Setting up software..."
