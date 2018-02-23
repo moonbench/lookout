@@ -1,11 +1,9 @@
 #!/bin/bash
 
-debug(){
-  echo -e "${1}"
-}
-say_done(){
-  debug "Done."
-}
+declare ROOT_DIR="$(dirname $(readlink -f $0))"
+
+LOG_PREFIX='cron'
+source ${ROOT_DIR}/shared.sh
 
 reset_crontab(){
   debug "Resetting crontab..."
@@ -26,7 +24,7 @@ set_timelapse(){
 
 set_connect(){
   debug "Setting crontab to auto connect to server on reboot..."
-  (crontab -l; echo "@reboot /var/watchtower/scripts/connect.sh") | crontab - 
+  (crontab -l; echo "@reboot /var/watchtower/scripts/connect.sh") | crontab -
   say_done
 }
 
