@@ -1,6 +1,6 @@
 #!/bin/bash
 declare ROOT_DIR="$(dirname $(readlink -f $0))"
-source ${ROOT_DIR}/scripts/shared.sh
+source ${ROOT_DIR}/shared.sh
 
 NUM_CAMERAS=$((ls -l /dev/video*) | wc -l)
 
