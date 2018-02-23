@@ -1,9 +1,5 @@
 #!/bin/bash
 
-HOST="localhost"
-PORT="8000"
-ECHO_PORT="20000"
-
 declare ROOT_DIR="$(dirname $(readlink -f $0))"
 
 LOG_PREFIX='network'
@@ -19,7 +15,7 @@ open_reverse_tunnel(){
   say_done
 }
 
-source /var/watchtower/config/remote
+source ${PROJECT_DIR}/config/remote
 
 while getopts ":h:p:" opt; do
   case "${opt}" in

@@ -29,7 +29,7 @@ take_picture(){
 
 
   filedate="$(date +\%Y\%m\%d)"
-  outputdir="/var/watchtower/cameras/${CAMERA}" && mkdir -p "${outputdir}"
+  outputdir="${PROJECT_DIR}/cameras/${CAMERA}" && mkdir -p "${outputdir}"
   outputdir="${outputdir}/images" && mkdir -p "${outputdir}"
   outputdir="${outputdir}/$(date +\%Y)" && mkdir -p "${outputdir}"
   outputdir="${outputdir}/$(date +\%m-\%d)" && mkdir -p "${outputdir}"
@@ -37,7 +37,7 @@ take_picture(){
   debug "Output file: ${output}"
 
   debug "Capturing image..."
-  avconv -f video4linux2 -i ${camera_source} ${resolution} ${quality} ${delay} -vframes 1 ${output} >> /var/log/watchtower/${LOG_PREFIX}.${filedate}.log 2>&1
+  avconv -f video4linux2 -i ${camera_source} ${resolution} ${quality} ${delay} -vframes 1 ${output} >> ${LOG_DIR}/${LOG_PREFIX}.${filedate}.log 2>&1
   say_done
 }
 

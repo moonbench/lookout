@@ -20,7 +20,7 @@ record_video(){
   debug "Resolution: ${RESOLUTION}"
 
   filedate="$(date +\%Y\%m\%d)"
-  outputdir="/var/watchtower/cameras/${CAMERA}" && mkdir -p "${outputdir}"
+  outputdir="${PROJECT_DIR}/cameras/${CAMERA}" && mkdir -p "${outputdir}"
   outputdir="${outputdir}/videos" && mkdir -p "${outputdir}"
   outputdir="${outputdir}/$(date +\%Y)" && mkdir -p "${outputdir}"
   outputdir="${outputdir}/$(date +\%m-\%d)" && mkdir -p "${outputdir}"
@@ -28,7 +28,7 @@ record_video(){
   debug "Output file: ${output}"
 
   debug "Capturing video..."
-  avconv -f video4linux2 -s ${RESOLUTION} -i ${camera_source} -t ${LENGTH} -q ${QUALITY} ${output} >> /var/log/watchtower/${LOG_PREFIX}.${filedate}.log 2>&1
+  avconv -f video4linux2 -s ${RESOLUTION} -i ${camera_source} -t ${LENGTH} -q ${QUALITY} ${output} >> ${LOG_DIR}/${LOG_PREFIX}.${filedate}.log 2>&1
   say_done
 }
 

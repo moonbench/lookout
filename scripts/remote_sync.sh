@@ -6,12 +6,15 @@ LOG_PREFIX='network'
 source ${ROOT_DIR}/shared.sh
 
 sync_files(){
-  source /var/watchtower/config/remote
+  source ${PROJECT_DIR}/config/remote
   name="$(hostname)"
-  debug "Running rsync..."
-
   filedate="$(date +\%Y\%m\%d)"
-  rsync -hvzae 'ssh -p 22' --progress /var/watchtower/cameras towers@${HOST}:/var/watchtower/towers/${name} >> /var/log/watchtower/${LOG_PREFIX}.${filedate}.log 2>&1
+
+  debug "Local sync source: ${PROJECT_DIR}/cameras"
+  debug "Remote sync destination: ${PROJECT_DIR}/towers/${name}"
+
+  debug "Running rsync..."
+  rsync -hvzae 'ssh -p 22' --progress ${PROJECT_DIR}/cameras towers@${HOST}:/var/watchtower/towers/${name} >> ${LOG_DIR}/${LOG_PREFIX}.${filedate}.log 2>&1
   say_done
 }
 

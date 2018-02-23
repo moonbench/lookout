@@ -1,5 +1,9 @@
 #!/bin/bash
 
+declare ROOT_DIR="$(dirname $(readlink -f $0))"
+source ${ROOT_DIR}/../config/shared
+
+# Colors
 HIGHLIGHT_COLOR='\e[36m'
 TITLE_COLOR='\e[4m\e[1m'
 DONE_COLOR='\e[1;32m'
@@ -40,5 +44,5 @@ log(){
   fi
   datestamp="$(date +\%c)"
   filedate="$(date +\%Y\%m\%d)"
-  echo "[${datestamp}] ${1}" >> /var/log/watchtower/${LOG_PREFIX}.${filedate}.log 2>&1
+  echo "[${datestamp}] ${1}" >> ${LOG_DIR}/${LOG_PREFIX}.${filedate}.log 2>&1
 }
