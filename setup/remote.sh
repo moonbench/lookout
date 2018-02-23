@@ -1,40 +1,18 @@
 #!/bin/bash
 
-HOST="localhost"
 declare ROOT_DIR="$(dirname $(readlink -f $0))"
-
-HIGHLIGHT_COLOR='\e[36m'
-TITLE_COLOR='\e[4m\e[1m'
-DONE_COLOR='\e[1;32m'
-NO_COLOR='\e[0m'
-
-debug(){
-  echo -e "${HIGHLIGHT_COLOR}${1}${NO_COLOR}"
-}
-title(){
-  echo -e "${TITLE_COLOR}${1}${NO_COLOR}\\n"
-}
-success(){
-  echo -e "${DONE_COLOR}${TITLE_COLOR}${1}${NO_COLOR}"
-}
-say_done(){
-  local donemsg="Done."
-  if [[ ! -z "${1}" ]]; then
-    donemsg=$1
-  fi
-  echo -e "${DONE_COLOR}$donemsg${NO_COLOR}\\n"
-}
+source ${ROOT_DIR}/../scripts/shared.sh
 
 copy_keys_to_server(){
   debug "Copying public keys to the server..."
   su -l camera <<EOF
 ssh-copy-id towers@${HOST}
-/var/watchtower/scripts/connect.sh -h ${HOST}
+${PROJECT_DIR}/scripts/connect.sh -h ${HOST}
 EOF
   say_done
 }
 
-source /var/watchtower/config/remote
+source ${PROJECT_DIR}/config/remote
 
 while getopts ":h:" opt; do
   case "${opt}" in

@@ -1,21 +1,9 @@
 #!/bin/bash
 
-HOST="localhost"
-PORT="8000"
-ECHO_PORT="20000"
-
 declare ROOT_DIR="$(dirname $(readlink -f $0))"
 
-HIGHLIGHT_COLOR='\e[36m'
-DONE_COLOR='\e[1;32m'
-NO_COLOR='\e[0m'
-
-debug(){
-  echo -e "${HIGHLIGHT_COLOR}${1}${NO_COLOR}"
-}
-say_done(){
-  echo -e "${DONE_COLOR}Done.${NO_COLOR}\\n"
-}
+LOG_PREFIX='network'
+source ${ROOT_DIR}/shared.sh
 
 open_reverse_tunnel(){
   debug "Creating reverse tunnel..."
@@ -27,7 +15,7 @@ open_reverse_tunnel(){
   say_done
 }
 
-source /var/watchtower/config/remote
+source ${PROJECT_DIR}/config/remote
 
 while getopts ":h:p:" opt; do
   case "${opt}" in

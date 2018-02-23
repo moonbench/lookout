@@ -1,14 +1,7 @@
 #!/bin/bash
 
-HOST="localhost"
-HOSTNAME="wt$(date +\%s)"
-
 declare ROOT_DIR="$(dirname $(readlink -f $0))"
-
-HIGHLIGHT_COLOR='\e[36m'
-TITLE_COLOR='\e[4m\e[1m'
-DONE_COLOR='\e[1;32m'
-NO_COLOR='\e[0m'
+source ${ROOT_DIR}/scripts/shared.sh
 
 debug(){
   echo -e "=> ${HIGHLIGHT_COLOR}${1}${NO_COLOR}"
@@ -47,10 +40,7 @@ ${ROOT_DIR}/setup/directories.sh ${ROOT_DIR}/scripts/. ${ROOT_DIR}/config/.
 say_done
 
 debug "Setting up networking..."
-
-source ${ROOT_DIR}/config/remote
-${ROOT_DIR}/setup/network.sh ${HOSTNAME}
-
+${ROOT_DIR}/setup/network.sh
 say_done
 
 debug "Setting up software..."
@@ -62,8 +52,8 @@ ${ROOT_DIR}/setup/ssh.sh
 say_done
 
 debug "Starting cron jobs for camera user..."
-su camera <<'EOF'
-/var/watchtower/scripts/set_crontab.sh
+su camera <<EOF
+${PROJECT_DIR}/scripts/set_crontab.sh
 EOF
 say_done
 
