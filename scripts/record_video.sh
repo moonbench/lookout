@@ -65,8 +65,8 @@ record_video(){
   outputdir="/var/watchtower/cameras/${CAMERA}" && mkdir -p "${outputdir}"
   outputdir="${outputdir}/videos" && mkdir -p "${outputdir}"
   outputdir="${outputdir}/$(date +\%Y)" && mkdir -p "${outputdir}"
-  outputdir="${outputdir}/$(date +\%m-\%d)" && mkdir -p "${outputdir}"
-  output="${outputdir}/$(date +\%H:\%M:\%S).flv"
+  outputdir="${outputdir}/$(date +\%m\%d)" && mkdir -p "${outputdir}"
+  output="${outputdir}/$(date +\%H\%M\%S).flv"
   debug "Output file: ${output}"
 
   debug "Capturing video..."
